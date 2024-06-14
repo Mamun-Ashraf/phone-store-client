@@ -6,7 +6,7 @@ const PhoneCard = ({ phone, onDelete }) => {
   const { _id, phone_name, brand, price, image } = phone;
 
   const handleDelete = async () => {
-    await fetch(`http://localhost:5000/phone/${_id}`, {
+    await fetch(`https://phone-store-server-2xjt.onrender.com//${_id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${token}`,

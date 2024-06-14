@@ -15,7 +15,7 @@ const UpdatePhones = () => {
   const handleUpdatePhone = async (data) => {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:5000/phone/${phone._id}`, {
+    await fetch(`https://phone-store-server-2xjt.onrender.com//${phone._id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",

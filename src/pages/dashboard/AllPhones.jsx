@@ -9,7 +9,7 @@ const AllPhones = () => {
   const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
-    fetch("http://localhost:5000/phones")
+    fetch("https://phone-store-server-2xjt.onrender.com/s")
       .then((res) => res.json())
       .then((data) => {
         setPhones(data);

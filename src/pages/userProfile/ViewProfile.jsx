@@ -6,7 +6,7 @@ const ViewProfile = () => {
   const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
-    fetch(`https://best-shopping-server.onrender.com/user/${user?.email}`)
+    fetch(`https://phone-store-server-2xjt.onrender.com//user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setUserInfo(data);

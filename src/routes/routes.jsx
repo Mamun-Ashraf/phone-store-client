@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `https://best-shopping-server.onrender.com/user/get/${params.id}`
+            `https://phone-store-server-2xjt.onrender.com//user/get/${params.id}`
           ),
       },
     ],
@@ -79,7 +79,7 @@ export const router = createBrowserRouter([
         path: "update-phone/:id",
         element: <UpdatePhone />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/phone/${params.id}`),
+          fetch(`https://phone-store-server-2xjt.onrender.com//${params.id}`),
       },
       {
         path: "all-phones",
