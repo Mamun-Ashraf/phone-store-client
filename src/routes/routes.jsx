@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../layouts/DashboardLayout";
-import UserProfile from "../pages/dashboard/UserProfile";
 import ErrorPage from "../pages/ErrorPage";
 import AllPhones from "../pages/dashboard/AllPhones";
 import AddPhone from "../pages/dashboard/AddPhone";
@@ -10,6 +9,10 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import PrivateRoute from "./privateRoute";
+import DashboardHome from "../pages/dashboard/DashboaedHome";
+import ViewProfile from "../pages/userProfile/ViewProfile";
+import EditProfile from "../pages/dashboard/EditProfile";
 
 export const router = createBrowserRouter([
   {
@@ -33,20 +36,40 @@ export const router = createBrowserRouter([
         path: "register",
         element: <Register />,
       },
+      {
+        path: "view-profile",
+        element: (
+          <PrivateRoute>
+            <ViewProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "edit-profile/:id",
+        element: (
+          <PrivateRoute>
+            <EditProfile />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://best-shopping-server.onrender.com/user/get/${params.id}`
+          ),
+      },
     ],
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <UserProfile />,
-      },
-      {
-        path: "all-phones",
-        element: <AllPhones />,
+        element: <DashboardHome />,
       },
       {
         path: "add-phone",
@@ -55,6 +78,12 @@ export const router = createBrowserRouter([
       {
         path: "update-phone/:id",
         element: <UpdatePhone />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/phone/${params.id}`),
+      },
+      {
+        path: "all-phones",
+        element: <AllPhones />,
       },
     ],
   },

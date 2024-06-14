@@ -1,17 +1,22 @@
 import { useForm } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const AddPhone = () => {
-  const token = localStorage.getItem("token");
+const EditProfile = () => {
+  const userInfo = useLoaderData();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const handleAddPhone = async (data) => {
-    await fetch("https://localhost:5000/phone", {
-      method: "POST",
+
+  const handleUpdateProfile = async (data) => {
+    const token = localStorage.getItem("token");
+
+    await fetch(`http://localhost:5000/user/${userInfo?.email}`, {
+      method: "PATCH",
       headers: {
         "Content-type": "application/json",
         authorization: `Bearer ${token}`,
@@ -20,77 +25,68 @@ const AddPhone = () => {
     })
       .then((res) => res.json())
       .then(() => {
-        Swal.fire("Phone added successfully!");
+        Swal.fire("User updated successfully!");
         reset();
       });
   };
-
   return (
     <div>
       <h1 className="text-2xl font-semibold text-center text-success mt-5 mb-8 underline">
-        Add a Phone
+        Edit Profile
       </h1>
       <form
-        onSubmit={handleSubmit(handleAddPhone)}
+        onSubmit={handleSubmit(handleUpdateProfile)}
         className="space-y-2 w-1/2 mx-auto"
       >
         <div>
+          <label htmlFor="">Name</label>
           <input
             {...register("name", { required: true })}
             className="bg-gray-100 p-2 border border-black rounded-lg w-full"
             type="text"
-            placeholder="Name"
+            defaultValue={userInfo.name}
           />
           {errors.name && (
             <span className="text-red-400">Name is required</span>
           )}
         </div>
         <div>
+          <label htmlFor="">Email</label>
           <input
-            {...register("brand", { required: true })}
+            {...register("email", { required: true })}
             className="bg-gray-100 p-2 border border-black rounded-lg w-full"
-            type="text"
-            placeholder="Brand"
+            type="email"
+            value={userInfo.email}
           />
-          {errors.brand && (
-            <span className="text-red-400">Brand is required</span>
+          {errors.email && (
+            <span className="text-red-400">Email is required</span>
           )}
         </div>
         <div>
+          <label htmlFor="">Age</label>
           <input
-            {...register("category", { required: true })}
-            className="bg-gray-100 p-2 border border-black rounded-lg w-full"
-            type="text"
-            placeholder="Category"
-          />
-          {errors.category && (
-            <span className="text-red-400">Category is required</span>
-          )}
-        </div>
-        <div>
-          <input
-            {...register("price", { required: true })}
+            {...register("age", { required: true })}
             className="bg-gray-100 p-2 border border-black rounded-lg w-full"
             type="number"
-            placeholder="Price"
           />
-          {errors.price && (
-            <span className="text-red-400">Price is required</span>
-          )}
+          {errors.age && <span className="text-red-400">Age is required</span>}
         </div>
         <div>
+          <label htmlFor="">Mobile number</label>
           <input
-            {...register("image")}
+            {...register("mobile", { required: true })}
             className="bg-gray-100 p-2 border border-black rounded-lg w-full"
             type="text"
-            placeholder="Image URL"
           />
+          {errors.mobile && (
+            <span className="text-red-400"> Mobile number is required</span>
+          )}
         </div>
         <div className="text-center">
           <input
             className="btn btn-success text-white"
             type="submit"
-            value="Add Phone"
+            value="Update profile"
           />
         </div>
       </form>
@@ -98,4 +94,4 @@ const AddPhone = () => {
   );
 };
 
-export default AddPhone;
+export default EditProfile;

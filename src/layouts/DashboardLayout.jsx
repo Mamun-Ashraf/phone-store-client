@@ -1,14 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
-const DashboardLayout = () => {
+const DashboardRoute = () => {
   return (
-    <div className="drawer lg:drawer-open">
-      <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-center">
+    <div className="drawer md:drawer-open">
+      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content">
         {/* Page content here */}
         <label
-          htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
+          htmlFor="my-drawer"
+          className="btn btn-primary drawer-button md:hidden"
         >
           Open drawer
         </label>
@@ -16,17 +16,31 @@ const DashboardLayout = () => {
       </div>
       <div className="drawer-side">
         <label
-          htmlFor="my-drawer-2"
+          htmlFor="my-drawer"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           {/* Sidebar content here */}
           <li>
-            <a>All Phones</a>
+            <Link to="/dashboard" className="text-primary">
+              Overview
+            </Link>
           </li>
           <li>
-            <a>Add Phone</a>
+            <Link to="/dashboard/all-phones" className="text-primary">
+              All phones
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/add-phone" className="text-primary">
+              Add a phone
+            </Link>
+          </li>
+          <li>
+            <button className="btn btn-error btn-sm text-white w-1/2">
+              <Link to="/">Home</Link>
+            </button>
           </li>
         </ul>
       </div>
@@ -34,4 +48,4 @@ const DashboardLayout = () => {
   );
 };
 
-export default DashboardLayout;
+export default DashboardRoute;
